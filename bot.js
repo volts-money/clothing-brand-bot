@@ -1,7 +1,7 @@
+require("dotenv").config();
 const { Client, GatewayIntentBits } = require("discord.js");
 
-const BOT_TOKEN = "MTUwMzE1MDQ2NjEyMzY5ODM2Nw.G5oaP7.hVdo7P_kd40i7iL29OOXs9OG2FRj4zezXIoDvo";
-
+const BOT_TOKEN = process.env.BOT_TOKEN;
 
 const YOUR_USER_ID = "1065431492416778332";
 
@@ -150,4 +150,4 @@ client.on("messageCreate", async (message) => {
   }
 });
 
-client.login("MTUwMzE1MDQ2NjEyMzY5ODM2Nw.G5oaP7.hVdo7P_kd40i7iL29OOXs9OG2FRj4zezXIoDvo");
+client.login(BOT_TOKEN);
