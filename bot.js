@@ -118,16 +118,31 @@ function scheduleDailyReminder() {
   }, ms);
 }
 
-client.once("ready", async () => {
-  console.log(`Bot is online as ${client.user.tag}`);
-  try {
-    const user = await client.users.fetch(YOUR_USER_ID);
-    await user.send("Test message — your bot is working!");
-    console.log("Test DM sent!");
-  } catch (err) {
-    console.error("DM failed:", err.message);
+client.on("messageCreate", async (message) => {
+  if (message.author.bot) return;
+  const cmd = message.content.trim().toLowerCase();
+
+  if (cmd === "!today") {
+    const day = getCurrentDay();
+    await message.author.send(buildMessage(day));
   }
-  scheduleDailyReminder();
+
+  if (cmd === "!progress") {
+    const day = getCurrentDay();
+    const completed = day - 1;
+    await message.author.send(`📊 **Your progress so far**\n\nCompleted: **${completed}/30 days**\nCurrent day: **Day ${day}**`);
+  }
+
+  if (cmd.startsWith("!day ")) {
+    const num = parseInt(cmd.split(" ")[1]);
+    if (num >= 1 && num <= 30) {
+      await message.author.send(buildMessage(num));
+    }
+  }
+
+  if (cmd === "!help") {
+    await message.author.send(`**Commands**\n\n\`!today\` — today's task\n\`!progress\` — how far you've come\n\`!day [number]\` — any specific day\n\`!help\` — this menu`);
+  }
 });
 
 client.on("messageCreate", async (message) => {
