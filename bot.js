@@ -38,7 +38,15 @@ const tasks = [
   { day: 30, title: "Reflect & set your next goals",      desc: "Write down what you learned, what you're proud of, and 3 goals for the next 3 months. You did it. What's next?" },
 ];
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.DirectMessages] });
+const client = new Client({ 
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.DirectMessages,
+    GatewayIntentBits.MessageContent,
+    GatewayIntentBits.GuildMessages,
+  ],
+  partials: ["CHANNEL", "MESSAGE"]
+});
 
 let startDate = null;
 
