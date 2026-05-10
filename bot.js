@@ -118,8 +118,15 @@ function scheduleDailyReminder() {
   }, ms);
 }
 
-client.once("ready", () => {
+client.once("ready", async () => {
   console.log(`Bot is online as ${client.user.tag}`);
+  try {
+    const user = await client.users.fetch(YOUR_USER_ID);
+    await user.send("Test message — your bot is working!");
+    console.log("Test DM sent!");
+  } catch (err) {
+    console.error("DM failed:", err.message);
+  }
   scheduleDailyReminder();
 });
 
